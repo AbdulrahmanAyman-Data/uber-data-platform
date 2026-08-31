@@ -1,0 +1,21 @@
+﻿# Environment & secrets
+.env
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# Data
+data/raw/
+data/generated/
+
+# Hadoop downloaded archive
+docker/hadoop/hadoop-3.3.6.tar.gz
+
+# Jupyter temporary files
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Hadoop/Spark temporary files
+**/.Trash-*/
