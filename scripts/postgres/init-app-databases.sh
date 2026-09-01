@@ -2,8 +2,7 @@
 set -e
 set -u
 
-# POSTGRES_APPS format: "db_name:username:password,db_name:username:password,..."
-# كل service بياخد له user وpassword وقاعدة بيانات خاصة بيه، بدل يوزر واحد مشترك
+
 
 function create_app_database() {
 	local db=$1

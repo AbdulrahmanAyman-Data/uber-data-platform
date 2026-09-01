@@ -21,6 +21,7 @@ services:
       - uber-network
     volumes:
       - uber_hadoop_data_master:/opt/hadoop
+      - ./scripts:/opt/scripts
     ports:
       - "9870:9870"   # HDFS NameNode UI
       - "8088:8088"   # YARN ResourceManager UI
@@ -154,6 +155,7 @@ services:
       - uber_nifi_provenance_repository:/opt/nifi/nifi-current/provenance_repository
       - ./nifi/templates:/opt/nifi/nifi-current/conf/templates
       - ./docker/hadoop:/opt/nifi/nifi-current/hadoop-conf
+      - ./nifi/rides-source:/opt/nifi/nifi-current/rides-source
     logging: *default-logging
     networks:
       - uber-network
