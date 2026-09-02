@@ -139,7 +139,9 @@ services:
   # NIFI — Ingestion layer
   # =========================================================
   uber-nifi:
-    image: apache/nifi:1.25.0
+    build:
+      context: ./docker/nifi
+    image: uber-nifi
     container_name: uber-nifi
     hostname: uber-nifi
     restart: unless-stopped
@@ -148,14 +150,16 @@ services:
     ports:
       - "8443:8443"
     volumes:
-      - uber_nifi_state:/opt/nifi/nifi-current/state
-      - uber_nifi_database_repository:/opt/nifi/nifi-current/database_repository
-      - uber_nifi_flowfile_repository:/opt/nifi/nifi-current/flowfile_repository
-      - uber_nifi_content_repository:/opt/nifi/nifi-current/content_repository
-      - uber_nifi_provenance_repository:/opt/nifi/nifi-current/provenance_repository
-      - ./nifi/templates:/opt/nifi/nifi-current/conf/templates
-      - ./docker/hadoop:/opt/nifi/nifi-current/hadoop-conf
-      - ./nifi/rides-source:/opt/nifi/nifi-current/rides-source
+    - uber_nifi_state:/opt/nifi/nifi-current/state
+    - uber_nifi_database_repository:/opt/nifi/nifi-current/database_repository
+    - uber_nifi_flowfile_repository:/opt/nifi/nifi-current/flowfile_repository
+    - uber_nifi_content_repository:/opt/nifi/nifi-current/content_repository
+    - uber_nifi_provenance_repository:/opt/nifi/nifi-current/provenance_repository
+    - ./nifi/templates:/opt/nifi/nifi-current/conf/templates
+    - ./docker/hadoop:/opt/nifi/nifi-current/hadoop-conf
+    - ./scripts:/opt/nifi/project-scripts      
+    - ./nifi/rides-source:/opt/nifi/nifi-current/rides-source
+    - ./nifi/reference-source:/opt/nifi/nifi-current/reference-source
     logging: *default-logging
     networks:
       - uber-network

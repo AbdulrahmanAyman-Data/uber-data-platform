@@ -27,7 +27,7 @@ def year_month_range(start_year: int, end_year: int):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--start-year", type=int, default=2024, help="First year to include (default: 2024)")
-    parser.add_argument("--end-year", type=int, default=2025, help="Last year to include (default: 2025)")
+    parser.add_argument("--end-year", type=int, default=2024, help="Last year to include (default: 2025)")
     parser.add_argument("--out", default="nifi/rides-source/rides_source_urls.txt", help="Output file path")
     args = parser.parse_args()
 

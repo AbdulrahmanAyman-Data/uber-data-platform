@@ -19,3 +19,9 @@ docker/hadoop/hadoop-3.3.6.tar.gz
 
 # Hadoop/Spark temporary files
 **/.Trash-*/
+
+# Local / temporary files
+docs/arcticture/.$Arcticture.drawio.bkp
+docs/arcticture/Arcticture.drawio
+zone_test.csv
+docker/spark/notebooks/Untitled.ipynb
