@@ -22,11 +22,10 @@ RUN apt-get update && \
 RUN pip3 install --no-cache-dir \
         geopandas \
         pandas \
-        shapely
+        shapely \
+        h3
 
 # Scripts get bind-mounted at runtime (see docker-compose.yml), not baked
 # in here, so updating a script doesn't require rebuilding the image.
 
 USER nifi
-
-
