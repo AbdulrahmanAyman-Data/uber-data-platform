@@ -203,6 +203,7 @@ services:
     networks:
       - uber-network
 
+
   # =========================================================
   # JUPYTER — Notebook environment
   # =========================================================
@@ -314,6 +315,7 @@ services:
       - uber_airflow_logs:/opt/airflow/logs
       - ./batch:/opt/airflow/batch
       - ./common:/opt/airflow/common
+      - ./sql:/opt/airflow/sql          # <-- السطر الجديد
     command: scheduler
     logging: *default-logging
     networks:
