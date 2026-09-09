@@ -46,7 +46,7 @@ The main objective was to take large volumes of raw trip data and transform them
 
 The platform follows a complete data flow from raw ingestion to business intelligence:
 
-![Data Architecture](docs/Architecture.png)
+![Data Architecture](docs/arcticture/Architecture.png)
 
 ### Pipeline Flow
 
