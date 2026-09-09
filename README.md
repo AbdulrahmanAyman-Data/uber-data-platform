@@ -83,6 +83,40 @@ Apache Superset
      ▼
 Analytics & Dashboards
 ```
+---
+
+## 🏛️ Data Modeling (Star Schema)
+
+The Gold Layer uses a centralized **Fact Table** surrounded by **Dimension Tables**, following a Kimball **Star Schema** design optimized for analytical queries.
+
+![Data Model](docs/arcticture/datflow.png)
+
+- **Fact Table**: `fact_rides` — Contains ride-level metrics and timestamps.
+- **Dimension Tables**:
+  - `dim_date` — Date and calendar attributes.
+  - `dim_zone` — NYC taxi zone and geospatial information.
+
+The grain of the `fact_rides` table is **one row per ride**, while the dimension tables provide descriptive context for analytical queries.
+
+---
+
+## 📊 Business Intelligence & Storytelling
+
+The final output is an interactive **Apache Superset dashboard** designed to provide insights into ride demand, trip characteristics, service providers, and geographic distribution.
+
+![Dashboard Preview](docs/arcticture/Dashboard.png)
+
+The dashboard includes:
+
+- **Total Rides** — Overall number of rides.
+- **Average Trip Distance** — Average distance per ride.
+- **Average Trip Duration** — Average duration of rides.
+- **Total Distance** — Total distance covered by all rides.
+- **Daily Rides Trend** — Ride demand over time.
+- **Rides by Hour** — Distribution of rides throughout the day.
+- **Rides by Service Provider** — Comparison between ride-hailing providers.
+- **Rides by Pickup Zone** — Geographic distribution of ride activity across NYC zones.
+
 ## 📂 Repository Structure
 
 The project is organized into dedicated directories for data processing, orchestration, infrastructure, configuration, documentation, and testing.
