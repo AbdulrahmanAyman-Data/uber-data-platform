@@ -22,21 +22,27 @@ WITH (
 -- dim_zone  
 -- =========================================================
 CREATE TABLE IF NOT EXISTS hive.default.dim_zone (
-    location_id     INTEGER,   -- PK, TLC taxi zone LocationID
-    borough         VARCHAR,
-    zone_name       VARCHAR,
-    service_zone    VARCHAR,
-    polygon_wkt     VARCHAR,   -- full zone polygon, WKT, WGS84 (lat/lon degrees)
-    centroid_lat    DOUBLE,
-    centroid_lon    DOUBLE,
-    geo_hash        VARCHAR,   -- H3 cell of the centroid (computed upstream, not by Trino/Spark)
-    h3_resolution   INTEGER
-)
-WITH (
-    format = 'PARQUET',
-    external_location = 'hdfs://uber-hadoop-master:9000/data/gold/dim_zone'
-);
 
+    location_id      INTEGER,
+    borough          VARCHAR,
+    zone_name        VARCHAR,
+    service_zone     VARCHAR,
+    polygon_geojson  VARCHAR,   
+    centroid_lat     DOUBLE,
+    centroid_lon     DOUBLE,
+    geo_hash         VARCHAR,   
+    h3_resolution    INTEGER
+
+)
+
+WITH (
+
+    format = 'PARQUET',
+
+    external_location =
+        'hdfs://uber-hadoop-master:9000/data/gold/dim_zone'
+
+);
 -- =========================================================
 -- fact_rides  
 -- =========================================================

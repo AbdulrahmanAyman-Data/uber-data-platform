@@ -86,9 +86,11 @@ DIM_ZONE_SCHEMA = StructType([
     StructField("borough",        StringType(), True),
     StructField("zone_name",      StringType(), True),
     StructField("service_zone",   StringType(), True),
+    StructField("polygon_geojson", StringType(), True),
     StructField("centroid_lat",   DoubleType(), True),
     StructField("centroid_lon",   DoubleType(), True),
-    StructField("polygon_wkt", StringType(), True)
+    StructField("geo_hash",       StringType(), True),
+    StructField("h3_resolution",  IntegerType(), True),
 ])
 
 FACT_RIDES_SCHEMA = StructType([

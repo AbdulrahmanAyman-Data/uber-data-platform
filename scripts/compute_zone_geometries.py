@@ -1,4 +1,5 @@
 import argparse
+import json
 import zipfile
 import tempfile
 import os
@@ -88,13 +89,17 @@ def main():
         zones_gdf = gpd.read_file(shp_path)
 
         # Reproject feet (NY State Plane) -> WGS84 degrees -- required both
-        # for the WKT we keep and for a correct H3 geo_hash below.
+        # for the GeoJSON geometry we keep and for a correct H3 geo_hash below.
         if zones_gdf.crs is None:
             log("WARNING: shapefile has no CRS set -- assuming EPSG:2263 (NY State Plane).")
             zones_gdf = zones_gdf.set_crs(epsg=2263)
         zones_gdf = zones_gdf.to_crs(epsg=4326)
 
-        zones_gdf["polygon_wkt"] = zones_gdf.geometry.apply(lambda geom: geom.wkt)
+        # GeoJSON geometry (as a JSON string) instead of WKT -- geom.__geo_interface__
+        # returns the geometry in the standard GeoJSON geometry dict shape
+        # (e.g. {"type": "Polygon", "coordinates": [...]}), which json.dumps
+        # then serializes to a single-line string safe to store in a CSV cell.
+        zones_gdf["polygon_geojson"] = zones_gdf.geometry.apply(lambda geom: json.dumps(geom.__geo_interface__))
 
         # Centroid in WGS84 degrees (computed AFTER to_crs(epsg=4326), so
         # this is a true lat/lon pair). For a handful of oddly-shaped /
@@ -113,14 +118,14 @@ def main():
         zones_gdf["h3_resolution"] = args.resolution
 
         geom_df = zones_gdf[
-            ["LocationID", "polygon_wkt", "centroid_lat", "centroid_lon", "geo_hash", "h3_resolution"]
+            ["LocationID", "polygon_geojson", "centroid_lat", "centroid_lon", "geo_hash", "h3_resolution"]
         ].rename(columns={"LocationID": "location_id"})
 
     merged = lookup_df.merge(geom_df, on="location_id", how="left")
 
-    missing = merged["polygon_wkt"].isna().sum()
+    missing = merged["polygon_geojson"].isna().sum()
     if missing > 0:
-        log(f"WARNING: {missing} zone(s) have no matching geometry -- polygon_wkt/centroid/geo_hash will be null for those.")
+        log(f"WARNING: {missing} zone(s) have no matching geometry -- polygon_geojson/centroid/geo_hash will be null for those.")
 
     merged = merged[
         [
@@ -128,7 +133,7 @@ def main():
             "borough",
             "zone_name",
             "service_zone",
-            "polygon_wkt",
+            "polygon_geojson",
             "centroid_lat",
             "centroid_lon",
             "geo_hash",

@@ -13,7 +13,7 @@ Usage:
 import argparse
 import os
 
-BASE_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data"
+BASE_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data/fhvhv_tripdata_"
 
 
 def year_month_range(start_year: int, end_year: int):
@@ -35,7 +35,7 @@ def main():
         raise ValueError("--start-year must be <= --end-year")
 
     urls = [
-        f"{BASE_URL}/fhvhv_tripdata_{y:04d}-{m:02d}.parquet"
+        f"{BASE_URL}{y:04d}-{m:02d}.parquet"
         for (y, m) in year_month_range(args.start_year, args.end_year)
     ]
 

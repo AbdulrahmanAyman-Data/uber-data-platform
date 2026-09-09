@@ -7,11 +7,9 @@ from common.spark_session import get_spark_session
 from common.star_schema import build_fact_rides, build_dim_date, build_dim_zone
 
 
-SILVER_PATH = "hdfs://uber-hadoop-master:9000/data/silver/staging_rides_geo"
+SILVER_PATH = "hdfs://uber-hadoop-master:9000/data/silver/rides"
 GOLD_PATH = "hdfs://uber-hadoop-master:9000/data/gold"
 
-# Small (~263-row) static reference file produced ONCE by
-# scripts/compute_zone_geometries.py -- see that script + docs/adaptation_notes.md.
 ZONE_GEOMETRIES_PATH = "hdfs://uber-hadoop-master:9000/data/reference/taxi_zone_geometries.csv"
 
 
@@ -29,7 +27,6 @@ def run():
 
     print(f"[Silver -> Gold] Reading Silver rides from: {SILVER_PATH}")
     rides_silver_df = spark.read.parquet(SILVER_PATH)
-    rides_silver_df.cache()
     print(f"[Silver -> Gold] Rides in Silver: {rides_silver_df.count()}")
 
     # --- Dimensions ---
@@ -41,12 +38,10 @@ def run():
 
     # --- Fact 
     fact_rides_df = build_fact_rides(rides_silver_df)
-    fact_rides_df.cache()
 
     write_gold_table(fact_rides_df, "fact_rides", ["year", "month", "day"])
   
-    rides_silver_df.unpersist()
-    fact_rides_df.unpersist()
+
     print("[Silver -> Gold] Star schema (Fact_Rides + Dim_Date + Dim_Zone) completed successfully.")
     spark.stop()
 

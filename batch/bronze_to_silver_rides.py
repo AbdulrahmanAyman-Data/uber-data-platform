@@ -15,7 +15,7 @@ from common.cleaning import (
 )
 
 BRONZE_PATH = "hdfs://uber-hadoop-master:9000/data/bronze/rides"
-SILVER_PATH = "hdfs://uber-hadoop-master:9000/data/silver/staging_rides_geo"
+SILVER_PATH = "hdfs://uber-hadoop-master:9000/data/silver/rides"
 QUARANTINE_PATH = "hdfs://uber-hadoop-master:9000/data/quarantine/rides"
 
 
@@ -23,11 +23,13 @@ def run():
     spark = get_spark_session("bronze_to_silver_rides")
 
     print(f"[Rides Bronze -> Silver] Reading from: {BRONZE_PATH}")
+
+    
     bronze_df = (
     spark.read
     .option("mergeSchema", "true")
     .parquet(BRONZE_PATH)
-    .limit(1000)
+    .limit(50000000)
     )
 
     print(f"[Rides Bronze -> Silver] Total records read: {bronze_df.count()}")
@@ -51,7 +53,6 @@ def run():
     (
         valid_df.write
         .mode("overwrite")
-        .partitionBy("year", "month", "day")
         .parquet(SILVER_PATH)
     )
 

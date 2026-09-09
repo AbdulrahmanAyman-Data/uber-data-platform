@@ -37,6 +37,8 @@ def build_dim_zone(spark: SparkSession, zone_centroids_path: str) -> DataFrame:
         spark.read
         .option("header", "true")
         .option("inferSchema", "true")
+        .option("quote", "\"")
+        .option("escape", "\"")
         .csv(zone_centroids_path)
     )
 
@@ -46,7 +48,7 @@ def build_dim_zone(spark: SparkSession, zone_centroids_path: str) -> DataFrame:
             "borough",
             "zone_name",
             "service_zone",
-            "polygon_wkt",
+            "polygon_geojson",
             "centroid_lat",
             "centroid_lon",
             "geo_hash",

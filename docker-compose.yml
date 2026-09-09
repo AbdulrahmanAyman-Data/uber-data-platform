@@ -71,7 +71,7 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_APPS: "metastore_db:hive:hivepassword,airflow_db:airflow:airflowpassword,superset_db:superset:supersetpassword"
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - uber_postgres_data:/var/lib/postgresql/data
       - ./scripts/postgres/init-app-databases.sh:/docker-entrypoint-initdb.d/init-app-databases.sh

@@ -1,14 +1,3 @@
-"""
-airflow/dags/batch_pipeline_dag.py
-
-Orchestrates the batch pipeline:
-Bronze -> Silver -> Gold -> Hive Metastore refresh.
-
-NiFi ingestion is run manually/out-of-band for the historical load,
-so this DAG starts at the Spark layer and assumes Bronze data is already
-present on HDFS.
-"""
-
 from datetime import datetime
 
 from airflow import DAG
@@ -26,6 +15,7 @@ TRINO_SCHEMA = "default"
 PARTITIONED_GOLD_TABLES = [
     "fact_rides",
 ]
+
 SQL_FILE = "/opt/airflow/sql/hive_ddl/star_schema_tables.sql"
 def create_gold_tables():
     """Execute star_schema_tables.sql to create Gold tables in Hive Metastore (idempotent via IF NOT EXISTS)."""
@@ -53,14 +43,13 @@ def create_gold_tables():
 
     for stmt in statements:
         cursor.execute(stmt)
-        cursor.fetchall()
         print(f"[create_gold_tables] executed:\n{stmt[:80]}...")
 
     print("[create_gold_tables] all statements executed successfully.")
 
 default_args = {
     "owner": "data-engineering",
-    "retries": 1,
+    "retries": 0,
 }
 
 

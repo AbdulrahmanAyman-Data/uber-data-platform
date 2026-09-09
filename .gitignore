@@ -25,3 +25,8 @@ docs/arcticture/.$Arcticture.drawio.bkp
 docs/arcticture/Arcticture.drawio
 zone_test.csv
 docker/spark/notebooks/Untitled.ipynb
+
+# Keep only PNG files in docs/arcticture
+docs/arcticture/*
+!docs/arcticture/
+!docs/arcticture/*.png
