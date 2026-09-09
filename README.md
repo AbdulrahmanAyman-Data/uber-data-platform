@@ -89,7 +89,7 @@ Analytics & Dashboards
 
 The Gold Layer uses a centralized **Fact Table** surrounded by **Dimension Tables**, following a Kimball **Star Schema** design optimized for analytical queries.
 
-![Data Model](docs/arcticture/datflow.png)
+![Data Model](docs/arcticture/dataflow.png)
 
 - **Fact Table**: `fact_rides` — Contains ride-level metrics and timestamps.
 - **Dimension Tables**:
