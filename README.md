@@ -82,3 +82,66 @@ Apache Superset
      │
      ▼
 Analytics & Dashboards
+```
+## 📂 Repository Structure
+
+The project is organized into dedicated directories for data processing, orchestration, infrastructure, configuration, documentation, and testing.
+
+```text
+uber-data-platform/
+│
+├── airflow/                         # Airflow orchestration and DAG definitions
+│   └── dags/                        # Pipeline workflow definitions
+│
+├── batch/                           # Batch data processing jobs
+│
+├── common/                          # Shared Spark utilities, schemas, and data models
+│
+├── config/                          # Configuration files for platform services
+│   ├── hadoop/                      # Hadoop and HDFS configuration
+│   ├── nifi/                        # Apache NiFi configuration
+│   ├── superset/                    # Apache Superset configuration
+│   └── trino/                       # Trino configuration
+│       └── catalog/                 # Trino catalog definitions
+│
+├── data/                            # Local development and sample data
+│   ├── generated/                   # Generated datasets
+│   ├── raw/                         # Raw local data files
+│   └── sample/                      # Small sample datasets for testing
+│
+├── docker/                          # Docker configurations for platform services
+│   ├── airflow/                     # Airflow Docker configuration
+│   ├── hadoop/                      # Hadoop Docker configuration
+│   ├── hive/                        # Hive Metastore Docker configuration
+│   ├── nifi/                        # NiFi Docker configuration
+│   ├── spark/                       # Spark Docker configuration
+│   │   └── notebooks/               # Spark notebooks and supporting files
+│   └── superset/                    # Superset Docker configuration
+│
+├── docs/                            # Project documentation and visual assets
+│   └── arcticture/                  # Architecture diagrams and screenshots
+│
+├── drivers/                         # External database drivers
+│   └── postgresql-42.7.3.jar        # PostgreSQL JDBC driver
+│
+├── nifi/                            # NiFi ingestion resources and source files
+│   ├── reference-source/            # Reference datasets for enrichment
+│   ├── rides-source/                # Ride data source files and metadata
+│   └── templates/                   # NiFi flow templates
+│
+├── scripts/                         # Supporting and utility scripts
+│   └── postgres/                    # PostgreSQL initialization scripts
+│
+├── sql/                             # SQL scripts used across the platform
+│   ├── hive_ddl/                    # Hive/Trino table definitions
+│   └── trino_queries/               # Analytical SQL queries
+│
+├── tests/                            # Automated testing
+│   ├── data_quality/                # Data quality and validation tests
+│   ├── integration/                 # End-to-end integration tests
+│   └── unit/                        # Unit tests
+│
+├── docker-compose.yml               # Multi-container platform definition
+├── .gitignore                       # Files and directories excluded from Git
+└── README.md                        # Project documentation and overview
+```
